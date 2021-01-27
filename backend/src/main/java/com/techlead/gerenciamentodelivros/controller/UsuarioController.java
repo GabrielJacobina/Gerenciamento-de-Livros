@@ -2,7 +2,7 @@ package com.techlead.gerenciamentodelivros.controller;
 
 import com.techlead.gerenciamentodelivros.dto.UsuarioDTO;
 import com.techlead.gerenciamentodelivros.model.Usuario;
-import com.techlead.gerenciamentodelivros.service.UsuarioService;
+import com.techlead.gerenciamentodelivros.service.UsuarioDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,10 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final UsuarioDetailsService usuarioDetailsService;
 
     @PostMapping
     public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO){
-        return new ResponseEntity<>(usuarioService.save(usuarioDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(usuarioDetailsService.save(usuarioDTO), HttpStatus.CREATED);
     }
-
 }

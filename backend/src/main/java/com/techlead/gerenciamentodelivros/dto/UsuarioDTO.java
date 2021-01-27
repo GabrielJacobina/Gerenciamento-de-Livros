@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UsuarioDTO {
 
-    private long id;
+    private Long id;
     private String nome;
     private String username;
     private String password;
+    private String authorities;
 }

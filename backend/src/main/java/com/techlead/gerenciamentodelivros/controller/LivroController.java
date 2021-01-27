@@ -21,29 +21,30 @@ public class LivroController {
     private final LivroService livroService;
 
     @GetMapping
-    public ResponseEntity<Page<Livro>> getAllContatos(Pageable pageable){
+    public ResponseEntity<Page<Livro>> getAllLivros(Pageable pageable){
         return new ResponseEntity<>(livroService.listAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Livro> getOneContato(@PathVariable(value = "id") Long id){
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Livro> getOneLivro(@PathVariable(value = "id") Long id){
         return new ResponseEntity<>(livroService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Livro> createContato(@Valid @RequestBody LivroDTO livroDTO){
+    public ResponseEntity<Livro> createLivro(@Valid @RequestBody LivroDTO livroDTO){
         return new ResponseEntity<>(livroService.save(livroDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContato(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Void> deleteLivro(@PathVariable(value = "id") Long id){
         livroService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> replaceContato(@Valid @RequestBody LivroDTO livroDTO) {
+    public ResponseEntity<Livro> replaceLivro(@Valid @RequestBody LivroDTO livroDTO) {
         livroService.replace(livroDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
