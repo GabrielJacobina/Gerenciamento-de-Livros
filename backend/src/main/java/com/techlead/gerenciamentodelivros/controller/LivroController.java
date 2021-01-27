@@ -1,5 +1,6 @@
 package com.techlead.gerenciamentodelivros.controller;
 
+import com.techlead.gerenciamentodelivros.dto.LivroDTO;
 import com.techlead.gerenciamentodelivros.model.Livro;
 import com.techlead.gerenciamentodelivros.service.LivroService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class LivroController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Livro> createContato(@Valid @RequestBody Livro livro){
-        return new ResponseEntity<>(livroService.save(livro), HttpStatus.CREATED);
+    public ResponseEntity<Livro> createContato(@Valid @RequestBody LivroDTO livroDTO){
+        return new ResponseEntity<>(livroService.save(livroDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -42,8 +43,8 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> replaceContato(@Valid @RequestBody Livro livro) {
-        livroService.replace(livro);
+    public ResponseEntity<Livro> replaceContato(@Valid @RequestBody LivroDTO livroDTO) {
+        livroService.replace(livroDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -1,5 +1,7 @@
 package com.techlead.gerenciamentodelivros.service;
 
+import com.techlead.gerenciamentodelivros.dto.LivroDTO;
+import com.techlead.gerenciamentodelivros.mapper.LivroMapper;
 import com.techlead.gerenciamentodelivros.model.Livro;
 import com.techlead.gerenciamentodelivros.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +26,15 @@ public class LivroService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Livro não encontrado"));
     }
 
-    public Livro save(Livro livro) {
-        return livroRepository.save(livro);
+    public Livro save(LivroDTO livroDTO) {
+        return livroRepository.save(LivroMapper.INSTANCE.toLivro(livroDTO));
     }
 
-    public void replace(Livro livro) {
-
+    public void replace(LivroDTO livroDTO) {
+        Livro livroSalvo = findById(livroDTO.getId());
+        Livro livro = LivroMapper.INSTANCE.toLivro(livroDTO);
+        livro.setId(livroSalvo.getId());
+        livroRepository.save(livro);
     }
 
     public void delete(Long id) {
