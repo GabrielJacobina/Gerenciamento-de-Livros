@@ -36,4 +36,9 @@ public class UsuarioDetailsService implements UserDetailsService {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario findByUsername(UserDetails userDetails) {
+        log.info(userDetails);
+        return usuarioRepository.findByUsername(userDetails.getUsername());
+    }
 }

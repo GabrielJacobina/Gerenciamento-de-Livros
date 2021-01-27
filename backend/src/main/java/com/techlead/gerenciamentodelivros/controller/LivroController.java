@@ -8,7 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,20 +27,26 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Livro> getOneLivro(@PathVariable(value = "id") Long id){
         return new ResponseEntity<>(livroService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Livro> createLivro(@Valid @RequestBody LivroDTO livroDTO){
-        return new ResponseEntity<>(livroService.save(livroDTO), HttpStatus.CREATED);
+    public ResponseEntity<Livro> createLivro(@Valid @RequestBody LivroDTO livroDTO,
+                                             @AuthenticationPrincipal UserDetails userDetails){
+        return new ResponseEntity<>(livroService.save(livroDTO, userDetails), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLivro(@PathVariable(value = "id") Long id){
-        livroService.delete(id);
+    public ResponseEntity<Void> deleteLivro(@PathVariable(value = "id") Long id,
+                                            @AuthenticationPrincipal UserDetails userDetails){
+        livroService.delete(id, userDetails);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<Void> deleteLivroAdmin(@PathVariable(value = "id") Long id){
+        livroService.deleteAdmin(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
