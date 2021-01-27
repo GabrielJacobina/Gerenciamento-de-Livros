@@ -51,8 +51,15 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> replaceLivro(@Valid @RequestBody LivroDTO livroDTO) {
-        livroService.replace(livroDTO);
+    public ResponseEntity<Livro> replaceLivro(@Valid @RequestBody LivroDTO livroDTO,
+                                              @AuthenticationPrincipal UserDetails userDetails) {
+        livroService.replace(livroDTO, userDetails);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<Livro> replaceLivroAdmin(@Valid @RequestBody LivroDTO livroDTO) {
+        livroService.replaceAdmin(livroDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -39,11 +39,15 @@ public class LivroService {
         return livroRepository.save(LivroMapper.INSTANCE.toLivro(livroDTO));
     }
 
-    public void replace(LivroDTO livroDTO) {
+    public void replace(LivroDTO livroDTO, UserDetails userDetails) {
         Livro livroSalvo = findById(livroDTO.getId());
-        Livro livro = LivroMapper.INSTANCE.toLivro(livroDTO);
-        livro.setId(livroSalvo.getId());
-        livroRepository.save(livro);
+        if (livroSalvo.getIdUsuario().getUsername().equals(userDetails.getUsername())) {
+            Livro livro = LivroMapper.INSTANCE.toLivro(livroDTO);
+            livro.setId(livroSalvo.getId());
+            livroRepository.save(livro);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Não é possível realizar essa operação");
+        }
     }
 
     public void delete(Long id, UserDetails userDetails) {
@@ -51,12 +55,19 @@ public class LivroService {
         if (livro.getIdUsuario().getUsername().equals(userDetails.getUsername())) {
             livroRepository.delete(findById(id));
         } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Não é possível realizar essa operação");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Não é possível realizar essa operação");
         }
     }
 
 
     public void deleteAdmin(Long id) {
         livroRepository.delete(findById(id));
+    }
+
+    public void replaceAdmin(LivroDTO livroDTO) {
+        Livro livroSalvo = findById(livroDTO.getId());
+        Livro livro = LivroMapper.INSTANCE.toLivro(livroDTO);
+        livro.setId(livroSalvo.getId());
+        livroRepository.save(livro);
     }
 }
