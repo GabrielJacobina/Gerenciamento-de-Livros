@@ -1,9 +1,9 @@
 package com.techlead.gerenciamentodelivros.controller;
 
 import com.techlead.gerenciamentodelivros.dto.UsuarioDTO;
+import com.techlead.gerenciamentodelivros.model.Token;
 import com.techlead.gerenciamentodelivros.service.UsuarioDetailsService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +33,8 @@ public class UsuarioController {
     @ApiResponses(value = {//
             @ApiResponse(code = 400, message = "Something went wrong"), //
             @ApiResponse(code = 422, message = "Invalid username/password supplied")})
-    public ResponseEntity<String> login(//
-                                @ApiParam("Username") @RequestParam String username, //
-                                @ApiParam("Password") @RequestParam String password) {
-        return new ResponseEntity<>(usuarioDetailsService.signin(username, password), HttpStatus.OK);
+    public ResponseEntity<Token> login(@RequestBody UsuarioDTO usuarioDTO) {
+        return new ResponseEntity<>(usuarioDetailsService.login(usuarioDTO.getUsername(), usuarioDTO.getPassword()), HttpStatus.OK);
     }
 
     @GetMapping("/refresh")

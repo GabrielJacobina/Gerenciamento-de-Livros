@@ -16,7 +16,7 @@
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
-        <start-class>murraco.JwtAuthServiceApp</start-class>
+<!--        <start-class>murraco.JwtAuthServiceApp</start-class>-->
     </properties>
     <dependencies>
         <dependency>

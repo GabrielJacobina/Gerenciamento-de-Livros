@@ -4,6 +4,7 @@ import com.techlead.gerenciamentodelivros.config.JwtTokenProvider;
 import com.techlead.gerenciamentodelivros.dto.UsuarioDTO;
 import com.techlead.gerenciamentodelivros.exception.CustomException;
 import com.techlead.gerenciamentodelivros.mapper.UsuarioMapper;
+import com.techlead.gerenciamentodelivros.model.Token;
 import com.techlead.gerenciamentodelivros.model.Usuario;
 import com.techlead.gerenciamentodelivros.model.enums.Role;
 import com.techlead.gerenciamentodelivros.repository.UsuarioRepository;
@@ -76,5 +77,12 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     public String refresh(String username) {
         return jwtTokenProvider.createToken(username, usuarioRepository.findByUsername(username).getAuthorities());
+    }
+    
+    public Token login(String username, String password) {
+        String textToken = this.signin(username, password);
+        Token token = new Token();
+        token.setToken(textToken);
+        return token;
     }
 }

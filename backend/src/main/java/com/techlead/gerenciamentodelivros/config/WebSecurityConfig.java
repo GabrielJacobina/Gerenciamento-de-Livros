@@ -1,8 +1,8 @@
 package com.techlead.gerenciamentodelivros.config;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,31 +13,33 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Log4j2
-@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                    .antMatchers("/livros/admin/**").hasRole("ADMIN")
-                    .antMatchers("/livros/**").hasRole("USER")
-                    .antMatchers("/usuarios/**").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+        http.cors().and().
+                csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Entry points
+        http.authorizeRequests()//
+                .antMatchers("/livros/admin/**").hasRole("ADMIN")
+                .antMatchers("/usuarios/**").permitAll()//
+                .antMatchers("/h2-console/**/**").permitAll()
+                .anyRequest().authenticated();
+
+        http.exceptionHandling().accessDeniedPage("/login");
+        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+
     }
 
     @Override
     public void configure(WebSecurity web) {
-        // Allow swagger to be accessed without authentication
         web.ignoring().antMatchers("/v2/api-docs")//
                 .antMatchers("/swagger-resources/**")//
                 .antMatchers("/swagger-ui.html")//
@@ -56,4 +58,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }
