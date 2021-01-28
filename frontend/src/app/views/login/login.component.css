@@ -1,0 +1,25 @@
+#log{
+    margin: auto;
+    padding: 10%;
+    border-radius: 5%;
+    width: 80%;
+}
+
+#titulo{
+    font: 50px Arial;
+    margin-left: 10%;
+}
+
+#entrar{
+    font-size: 20px;
+    width: 25%; 
+    background-color: black;
+
+}
+
+#criar{
+    font-size: 20px;
+    width: 25%; 
+    margin-top: 5%;
+    color: black;
+}

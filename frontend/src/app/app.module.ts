@@ -15,12 +15,17 @@ import { LivrosComponent } from './views/home/livros/livros.component';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { LoginComponent } from './views/login/login.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LivrosComponent
+    LivrosComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
@@ -33,6 +38,10 @@ import { JwtModule } from '@auth0/angular-jwt';
     MatButtonModule,
     MatListModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

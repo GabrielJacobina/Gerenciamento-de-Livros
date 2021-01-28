@@ -1,0 +1,22 @@
+<div id="log">
+    <h1 id="titulo">Login</h1>
+    <div class="example-container" fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field appearance="fill" style="width: 80%;">
+        <mat-label>Digite seu usuario</mat-label>
+        <input matInput placeholder="pat@example.com" [(ngModel)]="usuario.username" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" style="width: 80%;">
+            <mat-label>Digite sua senha</mat-label>
+            <input matInput [(ngModel)]="usuario.password" [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button id="entrar" type="submit" mat-raised-button color="primary"
+        (click)="login(usuario.username, usuario.password); usuario.password = ''" >Login</button>
+        <button id="criar" type="button" mat-stroked-button color="primary" [routerLink]="['/create-account']">Criar conta</button>
+
+    </div>
+</div>

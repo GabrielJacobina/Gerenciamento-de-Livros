@@ -13,7 +13,7 @@ export class JwtService {
     private httpClient: HttpClient
   ) { }
 
-  login(username: string, password: string) {
+  async login(username: string, password: string) {
     return this.httpClient.post<{ access_token: string }>(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(tap(res => {
         localStorage.setItem('access_token', res.access_token);
