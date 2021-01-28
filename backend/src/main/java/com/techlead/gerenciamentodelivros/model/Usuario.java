@@ -1,18 +1,15 @@
 package com.techlead.gerenciamentodelivros.model;
 
+import com.techlead.gerenciamentodelivros.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -29,17 +26,11 @@ public class Usuario implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
-    private String authorities;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Role> authorities;
 
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Livro> livro;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(authorities.split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public String getPassword() {

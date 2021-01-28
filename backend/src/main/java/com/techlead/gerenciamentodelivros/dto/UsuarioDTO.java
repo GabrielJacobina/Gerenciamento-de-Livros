@@ -1,9 +1,12 @@
 package com.techlead.gerenciamentodelivros.dto;
 
+import com.techlead.gerenciamentodelivros.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +18,5 @@ public class UsuarioDTO {
     private String nome;
     private String username;
     private String password;
-    private String authorities;
+    private List<Role> authorities;
 }
