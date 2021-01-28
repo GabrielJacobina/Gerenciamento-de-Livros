@@ -16,20 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioDetailsService usuarioDetailsService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<String> createUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO){
         return new ResponseEntity<>(usuarioDetailsService.save(usuarioDTO), HttpStatus.CREATED);
     }
 
-    @PostMapping("/signin")
-    @ApiOperation(value = "${UsuarioController.signin}")
+    @PostMapping("/login")
+    @ApiOperation(value = "${UsuarioController.login}")
     @ApiResponses(value = {//
             @ApiResponse(code = 400, message = "Something went wrong"), //
             @ApiResponse(code = 422, message = "Invalid username/password supplied")})
