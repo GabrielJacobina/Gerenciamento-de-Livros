@@ -1,3 +1,4 @@
+import { CreateAccountComponent } from './views/create-account/create-account.component';
 import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,9 @@ const routes: Routes = [
   },
   {
     path: 'login', component: LoginComponent
+  },
+  {
+    path: 'create-account', component: CreateAccountComponent
   }
 ];
 

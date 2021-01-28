@@ -1,0 +1,30 @@
+<h1 id="titulo">Criar meu Usuário</h1>
+<div id="criarConta">
+    <form [formGroup]="usuarioForm">      
+        <div class="example-container" fxLayout="column" fxLayoutAlign="center center">
+            
+            <mat-form-field appearance="fill" style="width: 80%;">
+                <mat-label>Digite seu nome</mat-label>
+                <input input matInput formControlName="nome" name="nome" required>
+            </mat-form-field>
+
+            <br>
+            <mat-form-field appearance="fill" style="width: 80%;">
+                <mat-label>Digite seu usuário</mat-label>
+                <input input matInput formControlName="username" name="username" required>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" style="width: 80%;">
+                <mat-label>Digite sua senha</mat-label>
+                <input matInput formControlName="password" name="password" [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field> 
+            <button id="criar" mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+        </div>
+    </form>
+</div>
+    
+

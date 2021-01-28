@@ -1,32 +1,70 @@
+import { retry, catchError } from 'rxjs/operators';
 import { Usuario } from './../model/usuario.model';
-import { HttpClient } from '@angular/common/http';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
+  jwtPayload: any;
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private jwtHelper: JwtHelperService,
   ) { }
 
-  async login(username: string, password: string) {
-    return this.httpClient.post<{ access_token: string }>(`${environment.apiUrl}/auth/login`, { username, password })
-      .pipe(tap(res => {
-        localStorage.setItem('access_token', res.access_token);
-      }))
+  async login(usuario: Usuario) {
+    return this.httpClient.post<any>(`${environment.apiUrl}/auth/login`, usuario, this.httpOptions)
+      .toPromise()
+      .then(res => {
+        console.log("print")
+        this.armazenarToken(res.token)
+        console.log("Alguma coisa" + res.token)
+      })
+      .catch(response => {
+        console.log(response)
+      })
   }
 
   register(usuario: Usuario) {
-    return this.httpClient.post<{ access_token: string }>(`${environment.apiUrl}/auth/register`, usuario).pipe(tap(res => {
-      this.login(usuario.username, usuario.password)
-    }))
+    return this.httpClient.post<{ access_token: string }>(`${environment.apiUrl}/auth/register`, usuario, this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
   }
 
   logout() {
     localStorage.removeItem('access_token');
   }
+
+  private armazenarToken(access_token: string) {
+    this.jwtPayload = this.jwtHelper.decodeToken(access_token);
+    window.localStorage.setItem('access_token', access_token);
+  }
+
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Erro ocorreu no lado do client
+      errorMessage = error.error.message;
+    } else {
+      // Erro ocorreu no lado do servidor
+      errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  };
 }

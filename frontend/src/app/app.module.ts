@@ -19,13 +19,15 @@ import { LoginComponent } from './views/login/login.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateAccountComponent } from './views/create-account/create-account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LivrosComponent,
-    LoginComponent
+    LoginComponent,
+    CreateAccountComponent
   ],
   imports: [
     HttpClientModule,
@@ -45,9 +47,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
-             return     localStorage.getItem('access_token');},
+             return localStorage.getItem('access_token');},
         allowedDomains: [environment.apiUrl],
-        disallowedRoutes: [`${environment.apiUrl}/auth/login`]
+        //disallowedRoutes: [`${environment.apiUrl}/auth/login`]
       }
     })
   ],

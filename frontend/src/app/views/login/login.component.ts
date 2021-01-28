@@ -21,10 +21,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login(username: string, password: string) {
-    this.jwtService.login(username, password)
-      .then(() => { this.router.navigate([''])
-    });
+  login(usuario: Usuario) {
+    this.jwtService.login(usuario);
+    //.(() => console.log(localStorage.getItem('access_token')));
   }
 
 }

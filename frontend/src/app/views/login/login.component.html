@@ -15,7 +15,7 @@
         </mat-form-field>
 
         <button id="entrar" type="submit" mat-raised-button color="primary"
-        (click)="login(usuario.username, usuario.password); usuario.password = ''" >Login</button>
+        (click)="login(usuario); usuario.password = ''" >Login</button>
         <button id="criar" type="button" mat-stroked-button color="primary" [routerLink]="['/create-account']">Criar conta</button>
 
     </div>
