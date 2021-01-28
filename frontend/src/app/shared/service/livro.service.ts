@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Livro } from './../model/livro.model';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -11,8 +12,6 @@ import { ResponsePageable } from '../model/responsePageable.model';
 export class LivroService {
   livro: Livro;
 
-  apiUrl = 'http://localhost:8080/livros'
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -24,7 +23,7 @@ export class LivroService {
   ) { }
 
   public getLivros(): Observable<ResponsePageable> {
-    return this.httpClient.get<ResponsePageable>(this.apiUrl, this.httpOptions)
+    return this.httpClient.get<ResponsePageable>(`${environment.apiUrl}/livros`, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -32,7 +31,7 @@ export class LivroService {
   }
 
   public postLivros(livro: Livro): Observable<Livro> {
-    return this.httpClient.post<Livro>(this.apiUrl, livro, this.httpOptions)
+    return this.httpClient.post<Livro>(`${environment.apiUrl}/livros`, livro, this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -40,7 +39,7 @@ export class LivroService {
   }
 
   public putLivros(livro: Livro): Observable<Livro> {
-    return this.httpClient.put<Livro>(`${this.apiUrl}/${livro.id}`, livro, this.httpOptions)
+    return this.httpClient.put<Livro>(`${environment.apiUrl}/livros/${livro.id}`, livro, this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
