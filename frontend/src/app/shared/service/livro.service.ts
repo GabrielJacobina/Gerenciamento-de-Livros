@@ -24,7 +24,7 @@ export class LivroService {
   ) { }
 
   public getLivros(): Observable<ResponsePageable> {
-    return this.httpClient.get<ResponsePageable>(this.apiUrl)
+    return this.httpClient.get<ResponsePageable>(this.apiUrl, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)

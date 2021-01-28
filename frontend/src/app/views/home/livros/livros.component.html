@@ -7,9 +7,8 @@
         <mat-card id="card">
             <h3>Todos os livros</h3>
         </mat-card>
-        <!-- <mat-list role="list" *ngFor="let livro of livros"> {{ livro.nome }}-->
-        <mat-list role="list">
-            <mat-list-item role="listitem">teste</mat-list-item>
+        <mat-list role="list" *ngFor="let livro of livros">
+            <mat-list-item role="listitem">{{ livro.nome }}</mat-list-item>
         </mat-list>
     </div>
 </div>
