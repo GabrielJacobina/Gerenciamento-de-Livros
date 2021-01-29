@@ -1,3 +1,6 @@
+import { httpInterceptorProviders } from './http-interceptos/index';
+import { AuthGuard } from './guards/auth.guard';
+import { JwtService } from './shared/service/jwt.service';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -49,11 +52,15 @@ import { CreateAccountComponent } from './views/create-account/create-account.co
         tokenGetter: function  tokenGetter() {
              return localStorage.getItem('access_token');},
         allowedDomains: [environment.apiUrl],
-        //disallowedRoutes: [`${environment.apiUrl}/auth/login`]
+        disallowedRoutes: [`${environment.apiUrl}/auth/login`]
       }
     })
   ],
-  providers: [],
+  providers: [
+    JwtService,
+    AuthGuard,
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

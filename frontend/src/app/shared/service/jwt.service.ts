@@ -45,8 +45,17 @@ export class JwtService {
       )
   }
 
-  logout() {
-    localStorage.removeItem('access_token');
+  getAuthorizationToken()  {
+    const token = window.localStorage.getItem('access_token');
+    return token;
+  }
+
+  isUserLoggedIn() {
+    const token = this.getAuthorizationToken();
+    if (!token) {
+      return false;
+    }
+    return true;
   }
 
   private armazenarToken(access_token: string) {
