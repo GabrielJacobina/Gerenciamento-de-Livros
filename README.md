@@ -2,7 +2,7 @@
 
 # Passos para rodar o projeto
 
-1. Tenha o [Java 11](https://www.java.com/download/), [Maven](https://maven.apache.org), [Npm](https://www.npmjs.com/) e o [AngularCLI](https://cli.angular.io/) instalados
+1. Tenha o [Java 11](https://www.java.com/download/), [Maven](https://maven.apache.org), [Npm](https://www.npmjs.com/), [AngularCLI](https://cli.angular.io/) e o [Docker](https://www.docker.com/) instalados
 
 2. Clone este repositório
   
@@ -22,24 +22,29 @@ $ cd gerenciamento-de-livros and cd backend
 $ mvn install
 ```
 
-5. Rode o backend do projeto
+5. Inicie o container mysql
+```
+$ docker-compose up
+```
+
+6. Rode o backend do projeto
 
 ```
 $ mvn spring-boot:run
 ```
 
-6. Abra a pasta do frontend
+7. Abra a pasta do frontend
 
 ```
 cd ../frontend
 ```
 
-7. Instale as dependências
+8. Instale as dependências
 ```
 npm i
 ```
 
-8. Rode o frontend
+9. Rode o frontend
 ```
 ng serve -o
 ```
