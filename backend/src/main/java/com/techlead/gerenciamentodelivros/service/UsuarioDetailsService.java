@@ -83,6 +83,7 @@ public class UsuarioDetailsService implements UserDetailsService {
         String textToken = this.signin(username, password);
         Token token = new Token();
         token.setToken(textToken);
+        log.info(passwordEncoder.encode("admin"));
         return token;
     }
 }
