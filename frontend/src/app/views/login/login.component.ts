@@ -22,8 +22,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(usuario: Usuario) {
-    this.jwtService.login(usuario);
-    //.(() => console.log(localStorage.getItem('access_token')));
+    this.jwtService.login(usuario)
+    .then(() => {
+      console.log(localStorage.getItem('access_token'));
+      this.router.navigate(['']);
+    });
   }
 
 }

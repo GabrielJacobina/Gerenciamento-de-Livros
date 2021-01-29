@@ -5,10 +5,10 @@
 
     <div id="livros">
         <mat-card id="card">
-            <h3>Todos os livros</h3>
+            <h3>Todos os livros <button id="create" mat-raised-button color="primary" (click)="create()">Cadastrar Livro</button></h3>
         </mat-card>
         <mat-list role="list" *ngFor="let livro of livros">
-            <mat-list-item role="listitem">{{ livro.nome }}</mat-list-item>
+            <mat-list-item role="listitem">{{ livro.nome }} <button id="edit" mat-raised-button color="primary" (click)="edit(livro)">Editar</button> <button id="delete" mat-raised-button color="warn" (click)="delete(livro)">Deletar</button></mat-list-item>
         </mat-list>
     </div>
 </div>

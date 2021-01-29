@@ -1,7 +1,7 @@
+import { CreateLivroComponent } from './views/home/livros/create-livro/create-livro.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CreateAccountComponent } from './views/create-account/create-account.component';
 import { LoginComponent } from './views/login/login.component';
-import { HomeComponent } from './views/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LivrosComponent } from './views/home/livros/livros.component';
@@ -16,6 +16,14 @@ const routes: Routes = [
   },
   {
     path: 'create-account', component: CreateAccountComponent
+  },
+  {
+    path: 'create-livro', component: CreateLivroComponent,
+      canActivate: [AuthGuard]
+  },
+  {
+    path: 'create-livro/:id', component: CreateLivroComponent,
+      canActivate: [AuthGuard]
   }
 ];
 

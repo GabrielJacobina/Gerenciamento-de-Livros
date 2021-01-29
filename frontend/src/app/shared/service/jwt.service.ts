@@ -1,6 +1,6 @@
 import { retry, catchError } from 'rxjs/operators';
 import { Usuario } from './../model/usuario.model';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -28,9 +28,7 @@ export class JwtService {
     return this.httpClient.post<any>(`${environment.apiUrl}/auth/login`, usuario, this.httpOptions)
       .toPromise()
       .then(res => {
-        console.log("print")
         this.armazenarToken(res.token)
-        console.log("Alguma coisa" + res.token)
       })
       .catch(response => {
         console.log(response)

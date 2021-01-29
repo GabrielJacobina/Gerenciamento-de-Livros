@@ -29,7 +29,9 @@ export class CreateAccountComponent implements OnInit {
   }
 
   register() {
-    this.jwtService.register(this.usuarioForm.value).subscribe(result => {});
+    this.jwtService.register(this.usuarioForm.value).subscribe(result => {
+      this.router.navigate(['']);
+    });
     this.usuarioForm.reset();
   }
 

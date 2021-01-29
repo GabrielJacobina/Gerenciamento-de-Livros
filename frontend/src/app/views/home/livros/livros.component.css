@@ -4,7 +4,22 @@
 
 
 #livros{
-    margin-top: 10%;
+    margin-top: 8%;
     margin-left: 10%;
     width: 80%;
+}
+
+#delete{
+    position: absolute;
+    right: 0px;
+}
+
+#edit{
+    position: absolute;
+    right: 7em;
+}
+
+#create{
+    position: absolute;
+    right: 0px;
 }

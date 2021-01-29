@@ -3,7 +3,7 @@ import { Livro } from './../model/livro.model';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 import { ResponsePageable } from '../model/responsePageable.model';
 
 @Injectable({
@@ -30,6 +30,13 @@ export class LivroService {
       );
   }
 
+  getLivroById(id: number): Observable<Livro> {
+    return this.httpClient.get<Livro>(`${environment.apiUrl}/livros/${id}`).pipe(
+      map(obj => obj),
+      catchError(e => this.handleError(e))
+    );
+  }
+
   public postLivros(livro: Livro): Observable<Livro> {
     return this.httpClient.post<Livro>(`${environment.apiUrl}/livros`, livro, this.httpOptions)
     .pipe(
@@ -44,6 +51,15 @@ export class LivroService {
       retry(2),
       catchError(this.handleError)
     );
+  }
+
+  public delete(livro: Livro) {
+    console.log(`A url ficou  ${environment.apiUrl}/${livro.id}`);
+    return this.httpClient.delete<Livro>(environment.apiUrl + '/livros/' + livro.id, this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
   }
 
 

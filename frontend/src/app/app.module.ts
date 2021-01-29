@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateAccountComponent } from './views/create-account/create-account.component';
+import { CreateLivroComponent } from './views/home/livros/create-livro/create-livro.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreateAccountComponent } from './views/create-account/create-account.co
     HomeComponent,
     LivrosComponent,
     LoginComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    CreateLivroComponent
   ],
   imports: [
     HttpClientModule,

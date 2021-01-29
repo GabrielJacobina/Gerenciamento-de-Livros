@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-toolbar-row style="font-size: 1.5rem; height: 80px; background-color: rgb(124, 121, 121); color: white;">
-        <button mat-icon-button><mat-icon>home</mat-icon></button>
+        <button mat-icon-button (click)="home()"><mat-icon>home</mat-icon></button>
         <span>Gerenciamento de Livros</span>
         <span class="example-spacer"></span>
         <button mat-raised-button (click)="logout()">Logout</button>

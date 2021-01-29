@@ -1,0 +1,20 @@
+<app-home></app-home>
+
+<mat-card>
+    <mat-card-title *ngIf="att">Editar Livro</mat-card-title>
+    <mat-card-title *ngIf="att==false" #criar>Criar Livro</mat-card-title>
+    <form>
+        <mat-form-field>
+            <input matInput placeholder="Nome" 
+            [(ngModel)]="livro.nome" name="nome">
+        </mat-form-field>
+    </form>
+
+    <button mat-raised-button (click)="updateLivro()" color="primary">
+        Atualizar
+    </button>
+
+    <button mat-raised-button (click)="cancel()">
+        Cancelar
+    </button>
+</mat-card>
